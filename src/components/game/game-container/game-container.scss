@@ -1,0 +1,19 @@
+.game__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 35px;
+  margin-top: 40px;
+}
+
+.game-mode {
+  .card__img {
+    height: 100%;
+  }
+  .card__desc {
+    display: none;
+  }
+}
+
+.game__start-btn {
+  display: block;
+}

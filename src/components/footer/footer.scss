@@ -1,0 +1,24 @@
+.footer {
+  padding: 30px 0;
+  background-color: $black;
+  color: $white;
+  margin-top: 50px;
+}
+
+.footer__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer__rsschool {
+  width: 130px;
+}
+
+.footer__github {
+  display: flex;
+  align-items: center;
+  &-link {
+    margin-left: 15px;
+  }
+}

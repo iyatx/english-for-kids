@@ -1,0 +1,132 @@
+$width-switcher: 75px;
+$height-switcher: 40px;
+$width-button-switcher: 30px;
+
+.header {
+  padding: 35px 0;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__mode {
+  display: flex;
+  align-items: center;
+}
+
+.header__mode-title {
+  font-weight: 800;
+}
+
+.header__switcher {
+  margin: 0 20px;
+}
+
+// Burger Menu
+.header__burger {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  z-index: 999;
+}
+
+.header__burger-line {
+  width: 100%;
+  height: 6px;
+  background: $black;
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+.header__burger-line::before,
+.header__burger-line::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: $black;
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+.header__burger-line::before {
+  transform: translateY(-16px);
+}
+
+.header__burger-line::after {
+  transform: translateY(16px);
+}
+
+.header.opened .header__burger-line {
+  transform: translateX(-50px);
+  background: transparent;
+}
+
+.header.opened .header__burger-line::before {
+  transform: rotate(45deg) translate(35px, -35px);
+  background: $black;
+}
+
+.header.opened .header__burger-line::after {
+  transform: rotate(-45deg) translate(35px, 35px);
+  background: $black;
+}
+
+// Switcher checkbox
+.switcher {
+  width: $width-switcher;
+  height: $height-switcher;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.switcher__input {
+  width: 0;
+  height: 0;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.switcher__input:checked + .switcher__label::before {
+  left: calc(100% - 35px);
+}
+
+.switcher__label {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: $green;
+  cursor: pointer;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.switcher__label::before {
+  content: "";
+  width: $width-button-switcher;
+  height: $width-button-switcher;
+  background: $white;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  transition: 0.15s;
+}
