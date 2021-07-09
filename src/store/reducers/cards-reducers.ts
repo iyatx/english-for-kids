@@ -11,7 +11,7 @@ interface IState {
 
 const initialState: IState = {
   currentCategory: 'Categories',
-  categories: categories,
+  categories,
   cards: [],
 };
 
@@ -21,7 +21,9 @@ export const cardsReducer: Reducer<IState> = (state = initialState, action) => {
       return state;
     case CardsTypes.SET_CURRENT_CATEGORY:
       const category = action.payload;
-      const getCategoryIdx = categories.findIndex((item) => item === category);
+      const getCategoryIdx = state.categories.findIndex(
+        (item) => item === category,
+      );
 
       return {
         ...state,

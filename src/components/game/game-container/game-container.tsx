@@ -15,6 +15,10 @@ import { ICard } from '@interfaces/index';
 import './game-container.scss';
 import GameEnd from '../game-end';
 import { resetGame } from './../../../store/actions/game-actions';
+import {
+  setFailItem,
+  setPlayModeClick,
+} from '@components/shared/localstorage-clicks';
 
 interface Props {
   cardsArray: ICard[];
@@ -31,7 +35,12 @@ export const GameContainer: React.FC<Props> = ({ cardsArray, mode }) => {
     (state: AppState) => state.game.isGameStarted,
   );
   const mistakes = useSelector((state: AppState) => state.game.mistakes);
-  const [currentRandomCard, setCurrentRandomCard] = useState<ICard>();
+  const [currentRandomCard, setCurrentRandomCard] = useState<ICard>({
+    word: '',
+    audioSrc: '',
+    translation: '',
+    image: '',
+  });
   const [cards, setCards] = useState<ICard[]>(cardsArray);
   const [redirect, setRedirect] = useState(false);
   const [isGameOver, setGameOver] = useState(false);
@@ -62,12 +71,16 @@ export const GameContainer: React.FC<Props> = ({ cardsArray, mode }) => {
     setCards(cards.filter((item) => item !== currentRandomCard));
     dispatch(addStar({ isCorrect: true }));
 
+    setPlayModeClick(currentRandomCard.word);
+
     return true;
   };
 
   const notCorrectCard = (): boolean => {
     playAudio(notCorrectAudio);
+
     dispatch(addStar({ isCorrect: false }));
+    setFailItem(currentRandomCard.word);
 
     return false;
   };

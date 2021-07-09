@@ -1,9 +1,14 @@
 .categories__card {
   .card__desc {
+    border-top: 7px solid black;
     height: calc(100% - 210px);
     padding-top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
   }
+}
+
+.play-mode .card__desc {
+  border-top: 7px solid $green;
 }

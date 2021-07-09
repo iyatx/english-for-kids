@@ -1,0 +1,19 @@
+.difficult__container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 35px;
+  margin-top: 35px;
+  @media only screen and (max-width: $bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.difficult__not-words {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    max-width: 100%;
+  }
+}

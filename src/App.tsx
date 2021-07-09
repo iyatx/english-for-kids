@@ -8,6 +8,7 @@ import HomePage from '@pages/home';
 import CardsPage from '@pages/cards';
 import { AppState } from '@store/index';
 import StatisticsPage from '@pages/statistics';
+import { DifficultPage } from './pages/difficult/difficult';
 
 export const App: React.FC = () => {
   const isOpenedSidebar = useSelector(
@@ -31,8 +32,11 @@ export const App: React.FC = () => {
           <Route path="/cards">
             <CardsPage />
           </Route>
-          <Route>
+          <Route path="/statistics">
             <StatisticsPage />
+          </Route>
+          <Route path="/difficult">
+            <DifficultPage />
           </Route>
         </Switch>
       </main>

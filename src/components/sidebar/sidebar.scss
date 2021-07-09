@@ -7,8 +7,26 @@
   z-index: 998;
   transition: transform 0.5s ease;
   transform: translateX(-400px);
+  overflow-y: scroll;
+  @media only screen and (max-width: $bp-sm) {
+    width: 100%;
+    transform: translateX(-100%);
+  }
   &.sidebar-opened {
     transform: translateX(0);
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $green;
+  }
+
+  &::-webkit-scrollbar {
+    width: 7px;
+    background-color: #f5f5f5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $black;
   }
 }
 
@@ -19,6 +37,10 @@
   transform: translateX(-50%);
   transition: all 2s ease;
   z-index: 9999;
+  padding-bottom: 20px;
+  @media only screen and (max-width: $bp-sm) {
+    width: 70%;
+  }
 }
 
 .sidebar__overlay {

@@ -6,11 +6,12 @@ import './game-card.scss';
 import { playAudio } from '@components/shared/play-audio';
 import classNames from 'classnames';
 import { useEffect } from 'react';
+import { setTrainModeClick } from './../../shared/localstorage-clicks';
 
 interface Props {
   card: ICard;
   mode: string;
-  findCard: (card: ICard) => boolean;
+  findCard?: (card: ICard) => boolean;
 }
 
 export const GameCard: React.FC<Props> = ({ card, mode, findCard }) => {
@@ -31,8 +32,11 @@ export const GameCard: React.FC<Props> = ({ card, mode, findCard }) => {
   };
 
   const onPlayAudioHandler = () => {
-    if (mode === 'TRAIN') playAudio(audioSrc);
-    if (mode === 'PLAY') {
+    if (mode === 'TRAIN') {
+      playAudio(audioSrc);
+      setTrainModeClick(card.word);
+    }
+    if (mode === 'PLAY' && findCard) {
       const isCorrect = findCard(card);
       setIsCorrect(isCorrect);
     }
