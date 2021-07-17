@@ -12,3 +12,10 @@ export const switchMode = (payload: 'TRAIN' | 'PLAY'): AppActionTypes => {
     payload,
   };
 };
+
+export const setToken = (payload: string): AppActionTypes => {
+  return {
+    type: AppTypes.SET_TOKEN,
+    payload
+  }
+}

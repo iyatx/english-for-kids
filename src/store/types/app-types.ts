@@ -1,6 +1,7 @@
 export enum AppTypes {
   TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR',
   CHANGE_MODE = 'CHANGE_MODE',
+  SET_TOKEN = 'SET_TOKEN'
 }
 
 interface IToggleSidebar {
@@ -12,4 +13,9 @@ interface ISwitchMode {
   payload: 'TRAIN' | 'PLAY';
 }
 
-export type AppActionTypes = IToggleSidebar | ISwitchMode;
+interface ISetToken {
+  type: AppTypes.SET_TOKEN;
+  payload: string;
+}
+
+export type AppActionTypes = IToggleSidebar | ISwitchMode | ISetToken;

@@ -130,3 +130,19 @@ $width-button-switcher: 30px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
   transition: 0.15s;
 }
+
+.header__auth {
+  display: flex;
+  align-items: center;
+}
+
+.header__login {
+  color: $white;
+  text-decoration: none;
+  padding: 15px 30px;
+  background: $green;
+  margin-left: 40px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border-radius: 5px;
+}

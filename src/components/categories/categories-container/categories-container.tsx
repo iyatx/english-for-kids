@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ICategories } from '@interfaces/index';
 import CategoriesCard from '@components/categories/categories-card';
 import './categories-container.scss';
 import { useSelector } from 'react-redux';
 import { AppState } from '@store/index';
 import classNames from 'classnames';
+import { ICategory } from '@interfaces/categories';
 
 interface Props {
-  categories: ICategories[];
+  categories: ICategory[];
 }
 
 export const CategoriesContainer: React.FC<Props> = ({ categories }) => {
@@ -20,8 +21,8 @@ export const CategoriesContainer: React.FC<Props> = ({ categories }) => {
           'play-mode': mode === 'PLAY',
         })}
       >
-        {categories.map((card) => (
-          <CategoriesCard card={card} key={`categories-card-${card.title}`} />
+        {categories.map((category) => (
+          <CategoriesCard categoryData={category} key={category._id} />
         ))}
       </div>
     </>

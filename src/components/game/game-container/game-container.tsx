@@ -14,21 +14,22 @@ import { ICard } from '@interfaces/index';
 
 import './game-container.scss';
 import GameEnd from '../game-end';
-import { resetGame } from './../../../store/actions/game-actions';
+import { resetGame } from '@store/actions/game-actions';
 import {
   setFailItem,
   setPlayModeClick,
 } from '@components/shared/localstorage-clicks';
+import { IWord } from '@interfaces/categories';
 
 interface Props {
-  cardsArray: ICard[];
+  words: IWord[];
   mode: string;
 }
 
 const correctAudio = 'audio/correct.mp3';
 const notCorrectAudio = 'audio/error.mp3';
 
-export const GameContainer: React.FC<Props> = ({ cardsArray, mode }) => {
+export const GameContainer: React.FC<Props> = ({ words, mode }) => {
   const dispatch = useDispatch();
 
   const isGameStarted = useSelector(
@@ -41,14 +42,14 @@ export const GameContainer: React.FC<Props> = ({ cardsArray, mode }) => {
     translation: '',
     image: '',
   });
-  const [cards, setCards] = useState<ICard[]>(cardsArray);
+  const [cards, setCards] = useState<ICard[]>(words);
   const [redirect, setRedirect] = useState(false);
   const [isGameOver, setGameOver] = useState(false);
 
   useEffect(() => {
-    setCards(cardsArray);
+    setCards(words);
     dispatch(resetGame());
-  }, [mode, cardsArray]);
+  }, [mode, words]);
 
   useEffect(() => {
     if (mode && !isGameStarted) return;
@@ -122,8 +123,8 @@ export const GameContainer: React.FC<Props> = ({ cardsArray, mode }) => {
           'game-mode': mode === 'PLAY',
         })}
       >
-        {cardsArray.map((card, index) => (
-          <GameCard card={card} mode={mode} key={index} findCard={findCard} />
+        {words.map((word) => (
+          <GameCard card={word} mode={mode} key={word._id} findCard={findCard} />
         ))}
       </div>
       {mode === 'PLAY' && (

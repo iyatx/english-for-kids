@@ -1,23 +1,14 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleGameStarted } from '@store/actions/game-actions';
 import CategoriesContainer from '@components/categories/categories-container';
-import { categories } from '../../assets/cards';
-import { ICategories } from 'interfaces';
 
 import './home.scss';
+import { AppState } from '@store/index';
 
 export const HomePage: React.FC = () => {
   const dispatch = useDispatch();
-  const data: string[] = categories;
-
-  const categoriesData: Array<ICategories> = data.map((item, imgIndex) => {
-    return {
-      title: item,
-      active: false,
-      imgIndex,
-    };
-  });
+  const categoriesData = useSelector((state: AppState) => state.categories.categories);
 
   useEffect(() => {
     dispatch(toggleGameStarted(false));

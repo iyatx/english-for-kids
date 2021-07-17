@@ -7,9 +7,11 @@ import { playAudio } from '@components/shared/play-audio';
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { setTrainModeClick } from './../../shared/localstorage-clicks';
+import { IWord } from '@interfaces/categories';
+import { baseURL } from '../../../api';
 
 interface Props {
-  card: ICard;
+  card: IWord;
   mode: string;
   findCard?: (card: ICard) => boolean;
 }
@@ -22,10 +24,6 @@ export const GameCard: React.FC<Props> = ({ card, mode, findCard }) => {
   useEffect(() => {
     setIsCorrect(false);
   }, [card, mode]);
-
-  const imageStyles: React.CSSProperties = {
-    backgroundImage: `url('../../assets/${image}')`,
-  };
 
   const flipCard = () => {
     setFlipped(true);
@@ -54,7 +52,9 @@ export const GameCard: React.FC<Props> = ({ card, mode, findCard }) => {
     >
       <div className="card__container">
         <div className="card__front">
-          <div className="card__img" style={imageStyles} />
+          <div className="card__img" style={
+            {backgroundImage: `url('${baseURL}/${image}')`}
+          } />
           <div className="card__desc">
             <h4 className="card__title text-sm">{word}</h4>
             <div className="card__flip-icon" onClick={flipCard}>
@@ -66,7 +66,9 @@ export const GameCard: React.FC<Props> = ({ card, mode, findCard }) => {
           </div>
         </div>
         <div className="card__back">
-          <div className="card__img" style={imageStyles} />
+          <div className="card__img" style={{
+            backgroundImage: `url('${baseURL}/${image}')`
+          }} />
           <div className="card__desc">
             <h4 className="card__title text-sm">{translation}</h4>
           </div>

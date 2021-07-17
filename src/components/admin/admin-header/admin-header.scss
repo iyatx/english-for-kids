@@ -1,0 +1,27 @@
+.admin-header {
+  height: 80px;
+  &__container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.admin-header__nav {
+  .nav__list {
+    display: flex;
+    flex-direction: row;
+  }
+  .nav__item {
+    margin: 0;
+  }
+  .nav__item:not(:first-child) {
+    margin-left: 40px;
+  }
+}
+
+.admin-header__logout {
+  text-decoration: none;
+  color: $black;
+}

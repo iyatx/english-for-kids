@@ -7,7 +7,7 @@ import GameContainer from '@components/game/game-container';
 import './cards.scss';
 
 export const CardsPage = (): React.ReactElement => {
-  const cardsArray = useSelector((state: AppState) => state.cards.cards);
+  const currentCategory = useSelector((state: AppState) => state.categories.currentCategory);
   const mode = useSelector((state: AppState) => state.app.mode);
 
   return (
@@ -16,7 +16,7 @@ export const CardsPage = (): React.ReactElement => {
         <GameStars />
         <h2 className="text-lg">Train & Play</h2>
         <div className="cards__game game">
-          <GameContainer cardsArray={cardsArray} mode={mode} />
+          { currentCategory?.words && <GameContainer words={currentCategory.words} mode={mode} /> }
         </div>
       </div>
     </div>

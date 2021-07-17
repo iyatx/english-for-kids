@@ -1,38 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { categories as data } from '@assets/cards';
 import { ILink } from '@interfaces/index';
 import { AppState } from '@store/index';
 import { toggleSidebar } from '@store/actions/app-action';
 import { resetGame } from '@store/actions/game-actions';
-import { setCurrentCategory } from '@store/actions/cards-actions';
+import { setCurrentCategory } from '@store/actions/categories-actions';
 
 import './sidebar.scss';
-
-const categories = data.map((item) => {
-  return {
-    title: item,
-    active: false,
-    to: '/cards',
-  };
-});
-
-const links: Array<ILink> = [
-  {
-    title: 'Categories',
-    active: true,
-    to: '/categories',
-  },
-  ...categories,
-  {
-    title: 'Statistics',
-    active: false,
-    to: '/statistics',
-  },
-];
 
 interface Props {
   isOpened: boolean;
@@ -40,16 +17,44 @@ interface Props {
 
 export const Sidebar: React.FC<Props> = ({ isOpened }) => {
   const dispatch = useDispatch();
-  const [categories, setCategories] = useState(links);
-  const currentCategory = useSelector(
-    (state: AppState) => state.cards.currentCategory,
-  );
+  const location = useLocation();
+  const currentCategory = useSelector((state: AppState) => state.categories.currentCategory);
+  const allCategories = useSelector((state: AppState) => state.categories.categories);
+  const [categories, setCategories] = useState<ILink[]>([]);
+
+  useEffect(() => {
+    setCategories([
+      {
+        title: 'Categories',
+        active: true,
+        to: '/categories',
+      },
+      ...allCategories.map((item) => {
+        return {
+          title: item.category,
+          active: false,
+          to: '/cards',
+        };
+      }),
+      {
+        title: 'Statistics',
+        active: false,
+        to: '/statistics',
+      },
+    ])
+  }, [allCategories]);
 
   useEffect(() => {
     setCategories(
       categories.map((link) => {
         link.active = false;
-        if (link.title === currentCategory) link.active = true;
+        if (location.pathname === '/cards') {
+          if (link.title === currentCategory?.category) link.active = true;
+        } else {
+          if (location.pathname === link.to) {
+            link.active = true;
+          }
+        }
 
         return link;
       }),

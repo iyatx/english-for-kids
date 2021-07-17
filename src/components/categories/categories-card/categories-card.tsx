@@ -1,25 +1,35 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { ICategories } from '@interfaces/index';
-import { cards } from '@assets/cards';
-import { setCurrentCategory } from '@store/actions/cards-actions';
+import { setCurrentCategory } from '@store/actions/categories-actions';
 
 import './categories-card.scss';
+import { ICategory } from '@interfaces/categories';
+import { baseURL } from '../../../api';
 
-export const CategoriesCard = (props: {
-  card: ICategories;
-}): React.ReactElement => {
+interface Props {
+  categoryData: ICategory;
+}
+
+const placeholderImage = 'assets/images/placeholder.jpg';
+
+export const CategoriesCard: React.FC<Props> = ({ categoryData  }) => {
+  const { category, words } = categoryData;
+
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const img = cards[props.card.imgIndex][0].image;
-  const { title } = props.card;
-
   const handleCategory = () => {
-    dispatch(setCurrentCategory(title));
+    dispatch(setCurrentCategory(category));
     history.push('/cards');
   };
+
+  const image = (): string => {
+    const imgSrc = words[0]?.image;
+    if (!imgSrc) return placeholderImage;
+
+    return `${baseURL}/${imgSrc}`;
+  }
 
   return (
     <div className="categories__card card" onClick={handleCategory}>
@@ -27,10 +37,10 @@ export const CategoriesCard = (props: {
         <div className="card__front">
           <div
             className="card__img"
-            style={{ backgroundImage: `url('../../assets/${img}')` }}
+            style={{ backgroundImage: `url('${image()}')` }}
           />
           <div className="card__desc">
-            <h4 className="card__title text-md">{title}</h4>
+            <h4 className="card__title text-md">{category}</h4>
           </div>
         </div>
       </div>
