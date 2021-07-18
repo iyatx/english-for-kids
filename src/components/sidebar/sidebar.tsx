@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { ILink } from '@interfaces/index';
-import { AppState } from '@store/index';
 import { toggleSidebar } from '@store/actions/app-action';
 import { resetGame } from '@store/actions/game-actions';
 import { setCurrentCategory } from '@store/actions/categories-actions';
@@ -13,53 +12,40 @@ import './sidebar.scss';
 
 interface Props {
   isOpened: boolean;
+  token: string;
 }
 
-export const Sidebar: React.FC<Props> = ({ isOpened }) => {
+const links = [
+  {
+    title: 'Categories',
+    active: true,
+    to: '/categories',
+  },
+  {
+    title: 'Statistics',
+    active: false,
+    to: '/statistics',
+  },
+  {
+    title: 'Admin',
+    active: false,
+    to: '/admin/category',
+  }
+]
+
+export const Sidebar: React.FC<Props> = ({ isOpened, token }) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const currentCategory = useSelector((state: AppState) => state.categories.currentCategory);
-  const allCategories = useSelector((state: AppState) => state.categories.categories);
-  const [categories, setCategories] = useState<ILink[]>([]);
+  const [items, setItems] = useState(links);
 
   useEffect(() => {
-    setCategories([
-      {
-        title: 'Categories',
-        active: true,
-        to: '/categories',
-      },
-      ...allCategories.map((item) => {
-        return {
-          title: item.category,
-          active: false,
-          to: '/cards',
-        };
-      }),
-      {
-        title: 'Statistics',
-        active: false,
-        to: '/statistics',
-      },
-    ])
-  }, [allCategories]);
+    const activeItems = items.map((item) => {
+      item.active = item.to === location.pathname;
+      return item;
+    });
 
-  useEffect(() => {
-    setCategories(
-      categories.map((link) => {
-        link.active = false;
-        if (location.pathname === '/cards') {
-          if (link.title === currentCategory?.category) link.active = true;
-        } else {
-          if (location.pathname === link.to) {
-            link.active = true;
-          }
-        }
-
-        return link;
-      }),
-    );
-  }, [isOpened]);
+    setItems(activeItems);
+  }, [location]);
 
   const switchCategories = (link: ILink) => {
     dispatch(setCurrentCategory(link.title));
@@ -72,10 +58,11 @@ export const Sidebar: React.FC<Props> = ({ isOpened }) => {
       <div className={classNames('sidebar', { 'sidebar-opened': isOpened })}>
         <nav className="sidebar__nav nav">
           <ul className="nav__list">
-            {categories.map((item, index) => {
+            {items.map((item, index) => {
               const navClasses = classNames('nav__item', {
                 'nav__item--active': item.active,
               });
+              if (item.title === 'Admin' && !token) return null;
               return (
                 <li
                   className={navClasses}

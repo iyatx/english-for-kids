@@ -1,9 +1,10 @@
-import { cards, categories } from '@assets/cards';
 import { ICardLocalStorage, ICardStatistics } from '@interfaces/index';
 import {
   StatisticsActionTypes,
   StatisticsTypes,
 } from '@store/types/statistics-types';
+import { ThunkAction } from 'redux-thunk';
+import { AppState } from '@store/index';
 
 const getProcent = (success: number, fails: number): number => {
   if (!fails) return 0;
@@ -12,13 +13,13 @@ const getProcent = (success: number, fails: number): number => {
   return Math.floor(res);
 };
 
-export const getItems = (): StatisticsActionTypes => {
-  let data: ICardStatistics[] = categories
-    .map((item, index) => {
-      return cards[index].map((card) => {
+export const getItems = (): ThunkAction<void, AppState, unknown, StatisticsActionTypes> => (dispatch, getState) => {
+  let data: ICardStatistics[] = getState().categories.categories
+    .map((category) => {
+      return category.words.map((card) => {
         const getFromLocal = localStorage.getItem(card.word);
         const obj = {
-          category: item,
+          category: category.category,
           word: card.word,
           translation: card.translation,
           audioSrc: card.audioSrc,
@@ -45,8 +46,8 @@ export const getItems = (): StatisticsActionTypes => {
 
   if (!data) data = [];
 
-  return {
+  dispatch({
     type: StatisticsTypes.GET_ITEMS,
     payload: data,
-  };
+  })
 };

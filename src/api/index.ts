@@ -15,8 +15,8 @@ export const userLogin = async (user: IUser): Promise<string> => {
     },
     body: JSON.stringify(user)
   });
-  const res: string = await data.json();
-  return res;
+  const { token } = await data.json();
+  return token;
 };
 
 export const getAllCategories = async (): Promise<Array<ICategory>> => {

@@ -63,9 +63,7 @@ interface Props {
 
 export const Table: React.FC<Props> = ({ updateTable, setUpdateTable }) => {
   const dispatch = useDispatch();
-  const itemsFromStore = useSelector(
-    (state: AppState) => state.statistics.items,
-  );
+  const itemsFromStore = useSelector((state: AppState) => state.statistics.items);
   const [items, setItems] = useState<ICardStatistics[]>([]);
   const [sortArray, setSortArray] = useState<ISortArray>({
     sortBy: 'category',

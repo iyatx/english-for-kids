@@ -1,15 +1,18 @@
 import { Reducer } from 'redux';
 import { ICategory } from '@interfaces/categories';
 import { CategoriesTypes } from '@store/types/categories-types';
+import { ILink } from '@interfaces/index';
 
 interface IState {
   categories: ICategory[],
   currentCategory: ICategory | null;
+  categoriesNavLinks: ILink[]
 }
 
 const initialState: IState = {
   categories: [],
   currentCategory: null,
+  categoriesNavLinks: []
 };
 
 export const CategoriesReducer: Reducer<IState> = (state = initialState, action) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '@store/index';
@@ -12,8 +12,14 @@ export const Header = () => {
   const isOpened = useSelector(
     (state: AppState) => state.app.sidebarVisibility,
   );
-  const token = useSelector((state: AppState) => state.app.token);
+  const getToken = useSelector((state: AppState) => state.app.token);
   const dispatch = useDispatch();
+
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    setToken(getToken);
+  }, [getToken])
 
   const handlerSwitchMode = function(event: React.ChangeEvent) {
     const checkbox = event.target as HTMLInputElement;
@@ -54,7 +60,7 @@ export const Header = () => {
           onClick={() => dispatch(toggleSidebar())}
         />
       )}
-      <Sidebar isOpened={isOpened} />
+      <Sidebar isOpened={isOpened} token={token} />
     </header>
   );
 };

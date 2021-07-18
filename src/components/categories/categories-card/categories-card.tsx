@@ -21,7 +21,7 @@ export const CategoriesCard: React.FC<Props> = ({ categoryData  }) => {
 
   const handleCategory = () => {
     dispatch(setCurrentCategory(category));
-    history.push('/cards');
+    history.push('/game');
   };
 
   const image = (): string => {

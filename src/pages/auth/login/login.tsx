@@ -40,7 +40,7 @@ export const LoginPage = () => {
 
   return (
     <div className='login'>
-      {token && <Redirect from='/login' to='/admin' />}
+      {token && <Redirect from='/login' to='/admin/category' />}
       <div className='login__container container'>
         <h3 className='login__title text-lg'>Log In</h3>
         <form className='login__form form'>

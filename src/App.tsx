@@ -16,6 +16,7 @@ import { LoginPage } from '@pages/auth/login/login';
 import { AppState } from '@store/index';
 import { setCategoriesData } from '@store/actions/categories-actions';
 import classNames from 'classnames';
+import { setToken } from '@store/actions/app-action';
 
 export const App: React.FC = () => {
   const isOpenedSidebar = useSelector(
@@ -28,9 +29,15 @@ export const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (location.pathname === '/game' || location.pathname === '/') history.push('/categories');
     dispatch(setCategoriesData());
     alert('Привет дружище, прошу прощение что не сделал таск в день дедлайн. Сможешь проверить в 22 июля, пожалуйста умоляю!!!!');
-    if (history.location.pathname === '/cards' || history.location.pathname === '/') history.push('/categories');
+
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      dispatch(setToken(token));
+    }
   }, []);
 
   useEffect(() => {
@@ -40,28 +47,28 @@ export const App: React.FC = () => {
 
   return (
     <div className={isOpenedSidebar ? 'overflowed' : ''}>
-      { adminPage ? <AdminHeader /> : <Header /> }
+      {adminPage ? <AdminHeader /> : <Header />}
       <main className={classNames(
         'main',
-        { 'main--overflowed': isOpenedSidebar }
+        { 'main--overflowed': isOpenedSidebar },
       )}>
         <Switch>
-          <Route path="/categories" exact>
+          <Route path='/categories' exact>
             <HomePage />
           </Route>
-          <Route path="/cards">
+          <Route path='/game'>
             <CardsPage />
           </Route>
-          <Route path="/statistics">
+          <Route path='/statistics'>
             <StatisticsPage />
           </Route>
-          <Route path="/difficult">
+          <Route path='/difficult'>
             <DifficultPage />
           </Route>
-          <Route path="/admin">
+          <Route path='/admin'>
             <AdminPage />
           </Route>
-          <Route path="/login">
+          <Route path='/login'>
             <LoginPage />
           </Route>
         </Switch>
@@ -69,4 +76,4 @@ export const App: React.FC = () => {
       <Footer />
     </div>
   );
-}
+};

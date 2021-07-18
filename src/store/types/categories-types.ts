@@ -10,11 +10,11 @@ interface IGetAllCategories {
   payload: ICategory[]
 }
 
-interface ISerCurrentCategory {
+interface ISetCurrentCategory {
   type: CategoriesTypes.SET_CURRENT_CATEGORY,
   payload: string
 }
 
 export type CategoriesActionTypes =
   | IGetAllCategories
-  | ISerCurrentCategory;
+  | ISetCurrentCategory;

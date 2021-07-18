@@ -13,9 +13,11 @@ export const switchMode = (payload: 'TRAIN' | 'PLAY'): AppActionTypes => {
   };
 };
 
-export const setToken = (payload: string): AppActionTypes => {
+export const setToken = (token: string): AppActionTypes => {
+  localStorage.setItem('token', token);
+
   return {
     type: AppTypes.SET_TOKEN,
-    payload
+    payload: token
   }
 }

@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import './admin.scss';
-import { AdminCategoryCard } from '@components/admin/admin-category-card/admin-category-card';
-import { useSelector } from 'react-redux';
-import { AppState } from '@store/index';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { getAllCategories } from '../../api';
-import { ICategory } from '@interfaces/categories';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from '@store/index';
+import { AdminCategoryCard } from '@components/admin/admin-category-card/admin-category-card';
+
+import './admin.scss';
 
 export const AdminPage: React.FC = () => {
   const token = useSelector((state: AppState) => state.app.token);
-  const [categories, setCategories] = useState<ICategory[]>([]);
-
-  useEffect(() => {
-    getAllCategories().then(data => setCategories(data));
-  }, []);
+  const categories = useSelector((state: AppState) => state.categories.categories);
 
   return (
     <div className='admin'>
-      {!token && <Redirect to='/' />}
       <div className='admin__container container'>
         <div className='admin__categories'>
           {
