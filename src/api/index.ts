@@ -1,26 +1,8 @@
-import { ICategory } from '@interfaces/categories';
-
+import axios from 'axios';
 export const baseURL = 'https://azizbeksavkimov-server-efk.herokuapp.com';
 
-interface IUser {
-  username: string;
-  password: string;
-}
+export const API = axios.create({
+  baseURL,
+  responseType: 'json'
+});
 
-export const userLogin = async (user: IUser): Promise<string> => {
-  const data = await fetch(`${baseURL}/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(user)
-  });
-  const { token } = await data.json();
-  return token;
-};
-
-export const getAllCategories = async (): Promise<Array<ICategory>> => {
-  const data = await fetch(`${baseURL}/category`);
-  const res: ICategory[] = await data.json();
-  return res;
-}

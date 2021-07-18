@@ -13,3 +13,8 @@ export interface ICategory {
   totalCount: number;
   words: IWord[];
 }
+
+export interface IUpdateCategory {
+  _id: string;
+  category: string;
+}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import './login.scss';
-import { userLogin } from '../../../api';
+import { API } from '../../../api';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '@store/actions/app-action';
@@ -32,10 +32,17 @@ export const LoginPage = () => {
   }
 
   const submitForm = async () => {
-    const token = await userLogin({username, password});
-    if (token) {
-      dispatch(setToken(token));
-    }
+    const data = {
+      username,
+      password
+    };
+
+    API
+      .post<string>('/login', data)
+      .then((res) => {
+        const token = res.data;
+        dispatch(setToken(token))
+      });
   }
 
   return (
